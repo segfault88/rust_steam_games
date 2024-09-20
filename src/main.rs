@@ -1,17 +1,19 @@
 use serde_derive::Deserialize;
 use serde_derive::Serialize;
 use serde_json::Value;
+use std::collections::HashMap;
+use std::error::Error;
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct Root {
     #[serde(rename = "20200")]
-    pub n20200: n20200,
+    pub games: HashMap<String, Game>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct n20200 {
+pub struct Game {
     pub name: String,
     #[serde(rename = "release_date")]
     pub release_date: String,
@@ -106,6 +108,10 @@ pub struct Tags {
 }
 
 
-fn main() {
-    println!("Hello, world!");
+fn main() -> Result<(), Box<dyn Error>> {
+    let f = std::fs::OpenOptions::new().read(true).open("data/games.json")?;
+    
+    let _games = serde_json::from_reader(f)?;
+
+    Ok(())
 }

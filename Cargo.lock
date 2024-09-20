@@ -36,6 +36,8 @@ dependencies = [
 name = "rust_steam_games"
 version = "0.1.0"
 dependencies = [
+ "serde",
+ "serde_derive",
  "serde_json",
 ]
 
