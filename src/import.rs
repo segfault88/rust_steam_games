@@ -1,4 +1,5 @@
 use scylla::Session;
+use scylla::SessionBuilder;
 use std::error::Error;
 use std::time::Instant;
 
@@ -6,6 +7,12 @@ mod models;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
+    let uri = std::env::var("SCYLLA_URI").unwrap_or_else(|_| "127.0.0.1:9042".to_string());
+
+    let session: Session = SessionBuilder::new().known_node(uri).build().await?;
+
+    session.refresh_metadata().await?;
+
     let mut rdr = csv::ReaderBuilder::new()
         .flexible(true)
         .from_path("data/games.csv")?;
@@ -16,10 +23,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
     for result in rdr.deserialize() {
         // Notice that we need to provide a type hint for automatic
         // deserialization.
-        let _game: models::Game = result?;
+        let game: models::Game = result?;
 
         if count < 1 {
-            println!("{:?}", _game);
+            println!("{:?}", game);
         }
         count += 1;
     }
