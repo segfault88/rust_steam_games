@@ -2,6 +2,8 @@ use scylla::Session;
 use scylla::SessionBuilder;
 use std::error::Error;
 use std::time::Instant;
+use rand::thread_rng;
+use rand::seq::SliceRandom;
 
 mod models;
 
@@ -20,14 +22,14 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let mut count = 0;
     let start = Instant::now();
 
+    let mut games = Vec::new();
+
     for result in rdr.deserialize() {
         // Notice that we need to provide a type hint for automatic
         // deserialization.
         let game: models::Game = result?;
 
-        if count < 1 {
-            println!("{:?}", game);
-        }
+        games.push(game);
         count += 1;
     }
 
@@ -36,6 +38,17 @@ async fn main() -> Result<(), Box<dyn Error>> {
         count,
         Instant::now().duration_since(start)
     );
+
+    games.shuffle(&mut thread_rng());
+
+    println!("random game:");
+    for game in games.iter().take(1) {
+        println!("{:?}", game);
+    }
+
+    for chunk in games.chunks(1024) {
+        println!("chunk size: {}", chunk.len());
+    }
 
     Ok(())
 }

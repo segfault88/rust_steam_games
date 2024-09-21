@@ -610,6 +610,7 @@ name = "rust_steam_games"
 version = "0.1.0"
 dependencies = [
  "csv",
+ "rand",
  "scylla",
  "serde",
  "serde_derive",
