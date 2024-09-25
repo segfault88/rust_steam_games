@@ -4,6 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
+axum = "0.7.6"
 csv = "1.3.0"
 rand = "0.8.5"
 scylla = "0.14.0"
@@ -15,3 +16,7 @@ tokio = { version = "1.40.0", features = ["full", "rt-multi-thread"] }
 [[bin]]
 name = "import"
 path = "src/import.rs"
+
+[[bin]]
+name = "server"
+path = "src/server.rs"
