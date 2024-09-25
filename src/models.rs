@@ -7,81 +7,83 @@ use serde_derive::Serialize;
 #[serde(rename_all = "camelCase")]
 pub struct Game {
     #[serde(rename = "AppID")]
-    pub app_id: u64,
+    pub app_id: i64,
     #[serde(rename = "Name")]
     pub name: String,
     #[serde(rename = "Release date")]
-    release_date: String,
+    pub release_date: String,
     #[serde(rename = "Estimated owners")]
-    estimated_owners: String,
+    pub estimated_owners: String,
     #[serde(rename = "Peak CCU")]
-    peak_ccu: u32,
+    pub peak_ccu: u32,
     #[serde(rename = "Required age")]
-    required_age: u8,
+    pub required_age: u8,
     #[serde(rename = "Price")]
-    price: String,
+    pub price: String,
     #[serde(rename = "DiscountDLC count")]
-    discount_dlc_count: u32,
+    pub discount_dlc_count: u32,
+    #[serde(rename = "Mystery")]
+    pub mystery: i64,
     #[serde(rename = "About the game")]
-    about_the_game: String,
+    pub about_the_game: String,
     #[serde(rename = "Supported languages")]
-    supported_languages: String,
+    pub supported_languages: String,
     #[serde(rename = "Full audio languages")]
-    full_audio_languages: String,
+    pub full_audio_languages: String,
     #[serde(rename = "Reviews")]
-    reviews: String,
+    pub reviews: String,
     #[serde(rename = "Header image")]
-    header_image: String,
+    pub header_image: String,
     #[serde(rename = "Website")]
-    website: Option<String>,
+    pub website: Option<String>,
     #[serde(rename = "Support url")]
-    support_url: Option<String>,
+    pub support_url: Option<String>,
     #[serde(rename = "Support email")]
-    support_email: Option<String>,
-    // #[serde(rename = "Windows")]
-    // windows: String,
-    // #[serde(rename = "Mac")]
-    // mac: String,
-    // #[serde(rename = "Linux")]
-    // linux: String,
-    // #[serde(rename = "Metacritic score")]
-    // metacritic_score: Option<u8>,
-    // #[serde(rename = "Metacritic url")]
-    // metacritic_url: Option<String>,
-    // #[serde(rename = "User score")]
-    // user_score: Option<f32>,
-    // #[serde(rename = "Positive")]
-    // positive: u32,
-    // #[serde(rename = "Negative")]
-    // negative: u32,
-    // #[serde(rename = "Score rank")]
-    // score_rank: Option<u32>,
-    // #[serde(rename = "Achievements")]
-    // achievements: Option<u32>,
-    // #[serde(rename = "Recommendations")]
-    // recommendations: Option<u32>,
-    // #[serde(rename = "Notes")]
-    // notes: Option<String>,
-    // #[serde(rename = "Average playtime forever")]
-    // average_playtime_forever: u32,
-    // #[serde(rename = "Average playtime two weeks")]
-    // average_playtime_two_weeks: u32,
-    // #[serde(rename = "Median playtime forever")]
-    // median_playtime_forever: u32,
-    // #[serde(rename = "Median playtime two weeks")]
-    // median_playtime_two_weeks: u32,
-    // #[serde(rename = "Developers")]
-    // developers: String,
-    // #[serde(rename = "Publishers")]
-    // publishers: String,
-    // #[serde(rename = "Categories")]
-    // categories: String,
-    // #[serde(rename = "Genres")]
-    // genres: String,
-    // #[serde(rename = "Tags")]
-    // tags: String,
-    // #[serde(rename = "Screenshots")]
-    // screenshots: String,
-    // #[serde(rename = "Movies")]
-    // movies: String,
+    pub support_email: Option<String>,
+    #[serde(rename = "Windows")]
+    pub windows: String,
+    #[serde(rename = "Mac")]
+    pub mac: String,
+    #[serde(rename = "Linux")]
+    pub linux: String,
+    #[serde(rename = "Metacritic score")]
+    pub metacritic_score: Option<u8>,
+    #[serde(rename = "Metacritic url")]
+    pub metacritic_url: Option<String>,
+    #[serde(rename = "User score")]
+    pub user_score: Option<f32>,
+    #[serde(rename = "Positive")]
+    pub positive: u32,
+    #[serde(rename = "Negative")]
+    pub negative: u32,
+    #[serde(rename = "Score rank")]
+    pub score_rank: Option<f64>,
+    #[serde(rename = "Achievements")]
+    pub achievements: Option<u32>,
+    #[serde(rename = "Recommendations")]
+    pub recommendations: Option<u32>,
+    #[serde(rename = "Notes")]
+    pub notes: Option<String>,
+    #[serde(rename = "Average playtime forever")]
+    pub average_playtime_forever: u32,
+    #[serde(rename = "Average playtime two weeks")]
+    pub average_playtime_two_weeks: u32,
+    #[serde(rename = "Median playtime forever")]
+    pub median_playtime_forever: u32,
+    #[serde(rename = "Median playtime two weeks")]
+    pub median_playtime_two_weeks: u32,
+    #[serde(rename = "Developers")]
+    pub developers: String,
+    #[serde(rename = "Publishers")]
+    pub publishers: String,
+    #[serde(rename = "Categories")]
+    pub categories: String,
+    #[serde(rename = "Genres")]
+    pub genres: String,
+    #[serde(rename = "Tags")]
+    pub tags: String,
+    #[serde(rename = "Screenshots")]
+    pub screenshots: String,
+    #[serde(rename = "Movies")]
+    pub movies: String,
 }

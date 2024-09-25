@@ -31,10 +31,26 @@ async fn create_table(session: &Session) -> Result<(), Box<dyn Error>> {
                 CREATE TABLE IF NOT EXISTS steam.games (
                     app_id bigint PRIMARY KEY,
                     name text,
-                    PRIMARY KEY(app_id)
+                    about_the_game text,
+                    release_date text,
+                    website text,
+                    notes text
                 );
             "#,
             (),
+        )
+        .await
+        .map(|_| ())
+        .map_err(From::from)
+}
+
+async fn insert_game(session: &Session, game: &models::Game) -> Result<(), Box<dyn Error>> {
+    session
+        .query_unpaged(
+            r#"
+            INSERT INTO steam.games (app_id, name, about_the_game, release_date, website, notes) VALUES (?, ?, ?, ?, ?, ?)
+        "#,
+            (game.app_id, &game.name, &game.about_the_game, &game.release_date, &game.website, &game.notes),
         )
         .await
         .map(|_| ())
@@ -54,7 +70,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     let mut rdr = csv::ReaderBuilder::new()
         .flexible(true)
-        .from_path("data/games.csv")?;
+        .from_path("data/games-fixed.csv")?;
 
     let mut count = 0;
     let start = Instant::now();
@@ -76,12 +92,35 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     games.shuffle(&mut thread_rng());
 
-    println!("random game:");
-    for game in games.iter().take(1) {
-        println!("{:?}", game);
+    let start = Instant::now();
+    let count = games.len();
+    let mut inserted = 0;
+
+    for game in games.iter() {
+        insert_game(&session, &game).await?;
+        inserted += 1;
+
+        if inserted % 1000 == 0 {
+            let took = Instant::now().duration_since(start);
+            println!(
+                "inserted {} out of {} in {:?}, {:?} per record",
+                inserted,
+                count,
+                took,
+                took / inserted
+            );
+        }
     }
 
-    session.query_unpaged(query, values);
+    println!(
+        "done total {} in {:?}",
+        inserted,
+        Instant::now().duration_since(start)
+    );
+
+    // games = games[0..10];
+
+    // session.query_unpaged(query, values);
 
     // for chunk in games.chunks(1024) {
     //     println!("chunk size: {}", chunk.len());
